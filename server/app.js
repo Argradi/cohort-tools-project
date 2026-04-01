@@ -32,7 +32,7 @@ app.use(cors({
 }))
 
 mongoose
-  .connect("mongodb://localhost:27017/cohort-tools-api")
+  .connect("mongodb://127.0.0.1:27017/cohort-tools-api")
   .then(x => console.log(`Conected to Database: "${x.connections[0].name}"`))
   .catch(err => console.error("Error connecting to MongoDB", err))
 
