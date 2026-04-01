@@ -1,5 +1,9 @@
 const express = require("express");
 const morgan = require("morgan");
+const mongoose = require("mongoose")
+const Cohort = require("./models/Cohort.model")
+const Student = require("./models/Student.model")
+
 const cookieParser = require("cookie-parser");
 const PORT = 5005;
 const cohorts = require("./cohorts.json")
@@ -27,6 +31,11 @@ app.use(cors({
   origin: ['http://localhost:5173']
 }))
 
+mongoose
+  .connect("mongodb://localhost:27017/cohort-tools-api")
+  .then(x => console.log(`Conected to Database: "${x.connections[0].name}"`))
+  .catch(err => console.error("Error connecting to MongoDB", err))
+
 // ROUTES - https://expressjs.com/en/starter/basic-routing.html
 // Devs Team - Start working on the routes here:
 // ...
@@ -35,11 +44,29 @@ app.get("/docs", (req, res) => {
 });
 
 app.get("/api/cohorts", (req, res) => {
-  res.json(cohorts)
+  Cohort
+    .find({})
+    .then((cohorts) => {
+      console.log("Retrieved cohorts", cohorts)
+      res.json(cohorts)
+    })
+    .catch((error) => {
+      console.error("Error while retrieving cohorts ->", error)
+      res.status(500).json({error: "Failed to retrieve cohorts"})
+    })
 })
 
 app.get("/api/students", (req, res) => {
-  res.json(students)
+  Student
+    .find({})
+    .then((students) => {
+      console.log("Retrieved students", students)
+      res.json(students)
+    })
+    .catch((error) => {
+      console.error("Error while retrieving students ->", error)
+      res.status(500).json({error: "Failed to retrieve students"})
+    })
 })
 
 
