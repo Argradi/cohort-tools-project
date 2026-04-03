@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 mongoose.set('runValidators', true);
 
 const cookieParser = require("cookie-parser");
+const { errorHandler, notFoundHandler } = require("./middleware/error-handling")
 const PORT = 5005;
 
 const cors = require("cors")
@@ -29,6 +30,12 @@ app.use(cors({
   origin: ['http://localhost:5173']
 }))
 
+
+
+
+
+
+
 mongoose
   .connect("mongodb://127.0.0.1:27017/cohort-tools-api")
   .then(x => console.log(`Conected to Database: "${x.connections[0].name}"`))
@@ -47,7 +54,9 @@ app.get("/docs", (req, res) => {
 app.use("/", require("./routes/cohort.routes"))
 app.use("/", require("./routes/student.routes"))
 
-
+//  ERROR HANDLING
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 
 

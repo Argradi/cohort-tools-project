@@ -24,9 +24,9 @@ router.get("/api/cohorts", (req, res) => {
       console.log("Retrieved cohorts", cohorts)
       res.json(cohorts)
     })
-    .catch((error) => {
-      console.error("Error while retrieving cohorts ->", error)
-      res.status(500).json({ error: "Failed to retrieve cohorts" })
+    .catch((err) => {
+      console.log("Error while retrieving cohorts")
+      next(err)
     })
 })
 
@@ -38,8 +38,8 @@ router.get("/api/cohorts/:cohortId", (req, res) => {
       res.json(cohort)
     })
     .catch((err) => {
-      console.log("error getting a new cohort...", err)
-      res.status(500).json({ error: "Error getting a new cohort in the DB..." })
+      console.log("error getting a new cohort...")
+      next(err)
     })
 })
 
@@ -52,8 +52,8 @@ router.put("/api/cohorts/:cohortId", (req, res) => {
       res.json(cohort)
     })
     .catch((err) => {
-      console.log("error updating a new cohort...", err)
-      res.status(500).json({ error: "Error updating a new cohort in the DB..." })
+      console.log("error updating a new cohort...")
+      next(err)
     })
 })
 
@@ -65,8 +65,8 @@ router.delete("/api/cohorts/:cohortId", (req, res) => {
       res.status(204).json(cohort)
     })
     .catch((err) => {
-      console.log("error deleting a new cohort...", err)
-      res.status(500).json({ error: "Error deleting a new cohort in the DB..." })
+      console.log("error deleting a new cohort...")
+      next(err)
     })
 })
 
