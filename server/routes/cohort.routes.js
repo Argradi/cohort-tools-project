@@ -15,7 +15,6 @@ router.post("/api/cohorts", isAuthenticated, (req, res) => {
       console.log("error creating a new cohort...", err)
       res.status(500).json({ error: "Error creating a new cohort in the DB..." })
     })
-
 })
 
 router.get("/api/cohorts", (req, res) => {
