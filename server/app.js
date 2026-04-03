@@ -2,12 +2,13 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose")
 mongoose.set('runValidators', true);
+require('dotenv').config();
 
 const cookieParser = require("cookie-parser");
 const { errorHandler, notFoundHandler } = require("./middleware/error-handling")
 const PORT = 5005;
 
-const cors = require("cors")
+const cors = require("cors");
 
 // STATIC DATA
 // Devs Team - Import the provided files with JSON data of students and cohorts here:
@@ -53,10 +54,12 @@ app.get("/docs", (req, res) => {
 
 app.use("/", require("./routes/cohort.routes"))
 app.use("/", require("./routes/student.routes"))
+app.use("/", require("./routes/auth.routes"))
 
 //  ERROR HANDLING
 app.use(notFoundHandler);
 app.use(errorHandler);
+
 
 
 
